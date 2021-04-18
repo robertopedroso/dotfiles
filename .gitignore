@@ -1,0 +1,16 @@
+*.swp
+*/__pycache__
+*.pyc
+
+config/*
+
+!config/nvim
+config/nvim/plugged
+
+!config/bash
+!config/compton
+!config/i3
+!config/polybar
+!config/rofi
+!config/termite
+!config/tmux
