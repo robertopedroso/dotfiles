@@ -90,7 +90,6 @@ require('packer').startup(function()
     use 'nvim-lua/popup.nvim'
     use 'nvim-telescope/telescope.nvim'
     use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-    use 'nvim-telescope/telescope-media-files.nvim'
     use 'sudormrfbin/cheatsheet.nvim'
 
     -- git tools
