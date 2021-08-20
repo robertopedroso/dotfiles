@@ -29,7 +29,8 @@ shopt -s checkwinsize
 # Autoloaders
 # ----------------------------------------------------------------------
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-[ -x "$(command -v pyenv)" ] && eval "$(pyenv init -)"
+[ -x "$(command -v pyenv)" ] && eval "$(pyenv init --path)"
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 for f in $HOME/.config/bash/*; do source $f; done
 
 
@@ -102,4 +103,3 @@ export AWS_PROFILE=joor-eks-preview
 if [ -e /home/rpedroso/.nix-profile/etc/profile.d/nix.sh ]; then
   . /home/rpedroso/.nix-profile/etc/profile.d/nix.sh;
 fi # added by Nix installer
-
