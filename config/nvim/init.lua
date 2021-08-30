@@ -547,4 +547,4 @@ gls.right[6] = {
 -------------------- MAPPINGS ------------------------------
 map('n', '<leader>n', ':NvimTreeToggle<CR>')
 map('n', '<leader>p', ':Telescope find_files<CR>')
-map('n', '<leader>a', ':Telescope live_grep<CR>')
+map('n', '<leader>g', ':Telescope live_grep<CR>')
