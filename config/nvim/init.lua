@@ -99,6 +99,7 @@ require('packer').startup(function()
 
     -- miscellaneous
     use { 'terrortylor/nvim-comment', config = function() require('nvim_comment').setup() end }
+    use { 'folke/zen-mode.nvim', config = function() require('zen-mode').setup() end }
 end)
 
 
@@ -549,3 +550,4 @@ gls.right[6] = {
 map('n', '<leader>n', ':NvimTreeToggle<CR>')
 map('n', '<leader>p', ':Telescope find_files<CR>')
 map('n', '<leader>g', ':Telescope live_grep<CR>')
+map('n', '<leader>z', ':ZenMode<CR>')
