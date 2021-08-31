@@ -80,6 +80,7 @@ require('packer').startup(function()
     use 'neovim/nvim-lspconfig'
     use 'onsails/lspkind-nvim'
     use 'ray-x/lsp_signature.nvim'
+    use 'jose-elias-alvarez/null-ls.nvim'
 
     -- completion & snippets
     use 'hrsh7th/nvim-compe'
@@ -113,12 +114,20 @@ require('lspkind').init()
 
 local lspconfig = require('lspconfig')
 local lspinstall = require('lspinstall')
+local null_ls = require('null-ls')
+
+null_ls.config({
+    sources = {
+        null_ls.builtins.formatting.black,
+        null_ls.builtins.formatting.stylua
+    }
+})
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+    local function buf_set_keymap(...) api.nvim_buf_set_keymap(bufnr, ...) end
+    local function buf_set_option(...) api.nvim_buf_set_option(bufnr, ...) end
 
     --Enable completion triggered by <c-x><c-o>
     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -136,6 +145,11 @@ local on_attach = function(client, bufnr)
     map('n', '<leader>m', '<cmd>lua vim.lsp.buf.rename()<CR>')
     map('n', '<leader>r', '<cmd>lua vim.lsp.buf.references()<CR>')
     map('n', '<leader>s', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
+
+    -- autoformat
+    if client.resolved_capabilities.document_formatting then
+        cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
+    end
 end
 
 
@@ -154,6 +168,12 @@ local function setup_servers()
             root_dir = vim.loop.cwd,
         }
     end
+
+    lspconfig['null-ls'].setup({
+        on_attach = on_attach,
+        capabilities = capabilities,
+        root_dir = vim.loop.cwd,
+    })
 end
 
 setup_servers()
@@ -161,7 +181,7 @@ setup_servers()
 -- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
 lspinstall.post_install_hook = function()
    setup_servers() -- reload installed servers
-   vim.cmd "bufdo e"
+   cmd "bufdo e"
 end
 
 -- lsp_signature setup
